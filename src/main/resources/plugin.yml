@@ -1,0 +1,5 @@
+name: Damocles
+version: 1.10.0
+author: Kowagatte
+main: ca.damocles.Cardinal
+api-version: 1.13
