@@ -57,7 +57,6 @@ public class Account {
 	public void logoutCharacter() {
 		if(isInCharacter()) {
 			characters.get(loadedCharacter).logout();
-			characters.get(loadedCharacter).saveToFile();
 			characters.remove(loadedCharacter);
 			loadedCharacter = -1;
 		}

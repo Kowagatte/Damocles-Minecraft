@@ -36,13 +36,13 @@ public class CharacterUpdater extends Thread{
 			delta += (now - lastTime) / nanoSecondsPerTicks;
 			lastTime = now;
 			if(delta >= 1) {
-				player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(character.getMaxHealth());
+				player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.MAX_HEALTH));
 				
-				player.setLevel(character.getLevel());
+				player.setLevel((int)character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.LEVEL));
 				
 				
 				if(!player.isDead())
-					player.setHealth(character.getHealth());
+					player.setHealth(character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.HEALTH));
 				
 				delta--;
 			}

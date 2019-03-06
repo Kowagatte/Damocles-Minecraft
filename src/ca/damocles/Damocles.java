@@ -11,8 +11,8 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import ca.damocles.Account.Account;
+import ca.damocles.IO.DamoclesDirectory;
 import ca.damocles.utils.ConfigFile;
-import ca.damocles.utils.DamoclesDirectory;
 
 public class Damocles {
 	

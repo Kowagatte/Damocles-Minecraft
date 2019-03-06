@@ -18,46 +18,26 @@ import ca.damocles.utils.ConfigFile;
 public class Character {
 	
 	private final int id;
-	ConfigFile config;
+	public ConfigFile config;
 	 
 	private UUID uuid;
 	private CharacterUpdater updater;
 	
-	private double health;
-	private double maxHealth;
-	private double mana;
-	private double maxMana;
-	private double speed;
-	private Nature nature;
-	private String username;
-	private int souls;
-	private int level;
-	private int experience;
-	private Inventory inventory;
-	private Location location;
+	private Map<Attribute, Double> attributes = new HashMap<Attribute, Double>();
+	private Nature nature = Nature.getRandomNature();
+	private String username = "UNKNOWN";
+	private Inventory inventory = Bukkit.getServer().createInventory(null, InventoryType.PLAYER);;
+	private Location location = Damocles.getDefaultWorld().getSpawnLocation();
 	
 	public Character(UUID uuid, int id, ConfigFile config) {
 		this.uuid = uuid;
 		this.config = config;
+		this.id = id;
 		if(config.isNewFile()) {
-			this.id = id;
-			health = 6;
-			maxHealth = 6;
-			mana = 0;
-			maxMana = 0;
-			speed = 0.2;
-			username = "UNKNOWN";
-			nature = Nature.getRandomNature();
-			souls = 3;
-			level = 1;
-			experience = 0;
-			location = Damocles.getDefaultWorld().getSpawnLocation();
-			inventory = Bukkit.getServer().createInventory(null, InventoryType.PLAYER);
+			getDefaultValues();
 			saveToFile();
-		}else {
-			this.id = id;
-			loadFromFile();
 		}
+		loadFromFile();
 	}
 	
 	public void login() {
@@ -68,18 +48,36 @@ public class Character {
 		updater.setActive(false);
 		if(!updater.isInterrupted())
 			updater.interrupt();
+		saveToFile();
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public double getAttributeValue(Attribute attribute) {
+		return attributes.get(attribute);
+	}
+	
+	public void setAttributeValue(Attribute attribute, double value) {
+		if(attributes.containsKey(attribute)) {
+			attributes.replace(attribute, value);
+			return;
+		}
+		attributes.put(attribute, value);
+		return;
 	}
 	
 	public Nature getNature() {
 		return nature;
 	}
 	
-	public int getExperienceToNextLevel() {
-		return new Level(getLevel(), getNature()).experienceToNextLevel();
+	public void setNature(Nature nature) {
+		this.nature = nature;
 	}
 	
-	public int getID() {
-		return id;
+	public int getExperienceToNextLevel() {
+		return new Level((int)getAttributeValue(Attribute.LEVEL), getNature()).experienceToNextLevel();
 	}
 	
 	public Location getLocation() {
@@ -98,46 +96,6 @@ public class Character {
 		this.inventory = inventory;
 	}
 	
-	public double getMana() {
-		return mana;
-	}
-
-	public void setMana(double mana) {
-		this.mana = mana;
-	}
-
-	public double getHealth() {
-		return health;
-	}
-
-	public void setHealth(double health) {
-		this.health = health;
-	}
-
-	public double getMaxHealth() {
-		return maxHealth;
-	}
-
-	public void setMaxHealth(double maxHealth) {
-		this.maxHealth = maxHealth;
-	}
-
-	public double getMaxMana() {
-		return maxMana;
-	}
-
-	public void setMaxMana(double maxMana) {
-		this.maxMana = maxMana;
-	}
-	
-	public double getSpeed() {
-		return speed;
-	}
-	
-	public void setSpeed(double speed) {
-		this.speed = speed;
-	}
-	
 	public String getUsername() {
 		return username;
 	}
@@ -146,67 +104,43 @@ public class Character {
 		this.username = username;
 	}
 	
-	public int getSouls() {
-		return souls;
-	}
-	
-	public void setSouls(int souls) {
-		this.souls = souls;
-	}
-	
-	public void addSouls(int souls) {
-		this.souls = getSouls() + souls;
-	}
-	
-	public void removeSouls(int souls) {
-		if(getSouls() >= 1) {
-			this.souls = getSouls() - souls;
-		}
-	}
-	
-	public int getLevel() {
-		return level;
-	}
-	
-	public void setLevel(int level) {
-		this.level = level;
-	}
-	
-	public void addLevel(int level) {
-		this.level = getLevel() + level;
-	}
-	
-	public int getExperience() {
-		return experience;
-	}
-	
-	public void setExperience(int exp) {
-		this.experience = exp;
-	}
-	
-	public void addExperience(int exp) {
-		this.experience = getExperience() + exp;
-	}
-	
 	public void loadFromFile() {
-		health = config.config.getDouble("health");
-		maxHealth = config.config.getDouble("maxHealth");
-		mana = config.config.getDouble("mana");
-		maxMana = config.config.getDouble("maxMana");
-		speed = config.config.getDouble("speed");
-		username = config.config.getString("username");
-		nature = Nature.valueOf(config.config.getString("nature"));
-		souls = config.config.getInt("souls");
-		level = config.config.getInt("level");
-		experience = config.config.getInt("experience");
-		location = getSavedLocation();
-		inventory = getSavedInventory();
+		for(Attribute attribute : Attribute.values()) {
+			setAttributeValue(attribute, config.config.getDouble(attribute.toString()));
+		}
+		setUsername(config.config.getString("username"));
+		setNature(Nature.valueOf(config.config.getString("nature")));
+		setLocation(getSavedLocation());
+		setInventory(getSavedInventory());
+	}
+	
+	public void saveToFile() {
+		for(Attribute attribute : Attribute.values()) {
+			config.config.set(attribute.toString(), getAttributeValue(attribute));
+		}
+		config.config.set("username", getUsername());
+		config.config.set("nature", getNature().toString());
+		config.save();
+		setSavedInventory(getInventory());
+		setSavedLocation(getLocation());
+	}
+	
+	public void getDefaultValues() {
+		ConfigFile file = new ConfigFile(Damocles.directories.DAMOCLES, "CHARACTER_DEFAULTS.yml");
+		for(Attribute attribute : Attribute.values()) {
+			setAttributeValue(attribute, file.config.getDouble(attribute.toString()));
+		}
 	}
 	
 	public Location getSavedLocation() {
 		String string = config.config.getString("location");
 		String[] s = string.split("/");
 		return new Location(Bukkit.getServer().getWorld(s[0]), Double.valueOf(s[1]), Double.valueOf(s[2]), Double.valueOf(s[3]), Float.valueOf(s[4]), Float.valueOf(s[5]));
+	}
+	
+	public void setSavedLocation(Location location) {
+		config.config.set("location", location.getWorld().getName()+"/"+location.getX()+"/"+location.getY()+"/"+location.getZ()+"/"+location.getYaw()+"/"+location.getPitch());
+		config.save();
 	}
 	
 	public Inventory getSavedInventory(){
@@ -221,27 +155,6 @@ public class Character {
 		return inv;
 	}
 	
-	public void saveToFile() {
-		config.config.set("health", health);
-		config.config.set("maxHealth", maxHealth);
-		config.config.set("mana", mana);
-		config.config.set("maxMana", maxMana);
-		config.config.set("speed", speed);
-		config.config.set("nature", nature.toString());
-		config.config.set("username", username);
-		config.config.set("souls", souls);
-		config.config.set("level", level);
-		config.config.set("experience", experience);
-		config.save();
-		setSavedInventory(inventory);
-		setSavedLocation(location);
-	}
-	
-	public void setSavedLocation(Location location) {
-		config.config.set("location", location.getWorld().getName()+"/"+location.getX()+"/"+location.getY()+"/"+location.getZ()+"/"+location.getYaw()+"/"+location.getPitch());
-		config.save();
-	}
-	
 	public void setSavedInventory(Inventory inventory){
 		List<Map<?, ?>> inventories = config.config.getMapList("inventory");
 		HashMap<Integer, ItemStack> hashInventory = new HashMap<Integer, ItemStack>();
@@ -254,6 +167,10 @@ public class Character {
 		inventories.add(hashInventory);
 		config.config.set("inventory", inventories);
 		config.save();
+	}
+	
+	public enum Attribute{
+		HEALTH, MAX_HEALTH, MANA, MAX_MANA, SPEED, SOULS, LEVEL, EXPERIENCE,
 	}
 	
 }

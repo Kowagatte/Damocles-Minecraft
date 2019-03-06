@@ -48,6 +48,7 @@ public class Cardinal extends JavaPlugin{
 	public void registerConfig(){
 		getConfig().options().copyDefaults(true);
 		saveConfig();
+		Damocles.directories.exportResource("/CHARACTER_DEFAULTS.yml");
 	}
 	
 	public boolean isFirstTime() {
