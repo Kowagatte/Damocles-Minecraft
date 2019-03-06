@@ -28,6 +28,7 @@ public class CharacterUpdater extends Thread{
 	
 	@Override
 	public void run() {
+		int count = 0;
 		long lastTime = System.nanoTime();
 		double nanoSecondsPerTicks = 1000000000 / 20;
 		double delta = 0;
@@ -36,14 +37,27 @@ public class CharacterUpdater extends Thread{
 			delta += (now - lastTime) / nanoSecondsPerTicks;
 			lastTime = now;
 			if(delta >= 1) {
-				player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.MAX_HEALTH));
+				count++;
+				
+				player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.BASE_MAX_HEALTH));
+				character.setAttributeValue(ca.damocles.Account.Character.Character.Attribute.MAX_HEALTH, player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+				if(character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.HEALTH) > character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.MAX_HEALTH)) {
+					character.setAttributeValue(ca.damocles.Account.Character.Character.Attribute.HEALTH, character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.MAX_HEALTH));
+				}
 				
 				player.setLevel((int)character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.LEVEL));
 				
+				double expRatio = character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.EXPERIENCE) / character.getExperienceToNextLevel();
+				player.setExp(0.0f);
+				player.setExp((float)(expRatio * (double)player.getExpToLevel()));
 				
 				if(!player.isDead())
 					player.setHealth(character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.HEALTH));
 				
+				if(count == 20) {
+					count = 0;
+					character.heal(1);
+				}
 				delta--;
 			}
 		}

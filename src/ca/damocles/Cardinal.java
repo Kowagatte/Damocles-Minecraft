@@ -17,6 +17,7 @@ import ca.damocles.Events.LoginMenuEvent;
 import ca.damocles.Events.PlayerJoin;
 import ca.damocles.Events.PlayerLeave;
 import ca.damocles.Events.PlayerShiftClick;
+import ca.damocles.Events.Player.CancelRegen;
 import ca.damocles.utils.ZipUtils;
 
 public class Cardinal extends JavaPlugin{
@@ -43,6 +44,7 @@ public class Cardinal extends JavaPlugin{
 		Bukkit.getPluginManager().registerEvents(new PlayerLeave(), this);
 		Bukkit.getPluginManager().registerEvents(new LoginMenuEvent(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerShiftClick(), this);
+		Bukkit.getPluginManager().registerEvents(new CancelRegen(), this);
 	}
 	
 	public void registerConfig(){

@@ -55,6 +55,15 @@ public class Character {
 		return id;
 	}
 	
+	public void heal(int amount) {
+		double difference = getAttributeValue(Attribute.MAX_HEALTH) - getAttributeValue(Attribute.HEALTH);
+		if(difference >= amount) {
+			setAttributeValue(Attribute.HEALTH, getAttributeValue(Attribute.HEALTH) + amount);
+		}else {
+			setAttributeValue(Attribute.HEALTH, getAttributeValue(Attribute.MAX_HEALTH));
+		}
+	}
+	
 	public double getAttributeValue(Attribute attribute) {
 		return attributes.get(attribute);
 	}
@@ -170,7 +179,7 @@ public class Character {
 	}
 	
 	public enum Attribute{
-		HEALTH, MAX_HEALTH, MANA, MAX_MANA, SPEED, SOULS, LEVEL, EXPERIENCE,
+		HEALTH, MAX_HEALTH, BASE_MAX_HEALTH, MANA, MAX_MANA, SPEED, SOULS, LEVEL, EXPERIENCE,
 	}
 	
 }
