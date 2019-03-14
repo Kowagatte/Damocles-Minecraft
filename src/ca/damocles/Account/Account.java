@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import ca.damocles.Damocles;
 import ca.damocles.Account.Character.Character;
-import ca.damocles.utils.ConfigFile;
+import ca.damocles.FileIO.ConfigFile;
 
 public class Account {
 	

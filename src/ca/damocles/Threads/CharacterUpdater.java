@@ -39,21 +39,27 @@ public class CharacterUpdater extends Thread{
 			if(delta >= 1) {
 				count++;
 				
-				player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.BASE_MAX_HEALTH));
-				character.setAttributeValue(ca.damocles.Account.Character.Character.Attribute.MAX_HEALTH, player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-				if(character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.HEALTH) > character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.MAX_HEALTH)) {
-					character.setAttributeValue(ca.damocles.Account.Character.Character.Attribute.HEALTH, character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.MAX_HEALTH));
+				//MAXHEALTH & OVERFLOW UPDATES
+				player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(character.getAttributeValue(ca.damocles.Account.Character.Attribute.BASE_MAX_HEALTH));
+				character.setAttributeValue(ca.damocles.Account.Character.Attribute.MAX_HEALTH, player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+				if(character.getAttributeValue(ca.damocles.Account.Character.Attribute.HEALTH) > character.getAttributeValue(ca.damocles.Account.Character.Attribute.MAX_HEALTH)) {
+					character.setAttributeValue(ca.damocles.Account.Character.Attribute.HEALTH, character.getAttributeValue(ca.damocles.Account.Character.Attribute.MAX_HEALTH));
 				}
 				
-				player.setLevel((int)character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.LEVEL));
-				
-				double expRatio = character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.EXPERIENCE) / character.getExperienceToNextLevel();
+				//EXP UPDATES
+				player.setLevel((int)character.getAttributeValue(ca.damocles.Account.Character.Attribute.LEVEL));
+				double expRatio = character.getAttributeValue(ca.damocles.Account.Character.Attribute.EXPERIENCE) / character.getExperienceToNextLevel();
 				player.setExp(0.0f);
 				player.setExp((float)(expRatio * (double)player.getExpToLevel()));
 				
+				//HEALTH UPDATE
 				if(!player.isDead())
-					player.setHealth(character.getAttributeValue(ca.damocles.Account.Character.Character.Attribute.HEALTH));
+					player.setHealth(character.getAttributeValue(ca.damocles.Account.Character.Attribute.HEALTH));
 				
+				//MANA UPDATE
+				player.setFoodLevel((int)character.getAttributeValue(ca.damocles.Account.Character.Attribute.MANA));
+				
+				//REGEN
 				if(count == 20) {
 					count = 0;
 					character.heal(1);

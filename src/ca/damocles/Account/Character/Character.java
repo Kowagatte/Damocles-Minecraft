@@ -1,5 +1,6 @@
 package ca.damocles.Account.Character;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import ca.damocles.Damocles;
+import ca.damocles.FileIO.ConfigFile;
 import ca.damocles.Threads.CharacterUpdater;
-import ca.damocles.utils.ConfigFile;
 
 public class Character {
 	
@@ -26,6 +27,7 @@ public class Character {
 	private Map<Attribute, Double> attributes = new HashMap<Attribute, Double>();
 	private Nature nature = Nature.getRandomNature();
 	private String username = "UNKNOWN";
+	private List<StatInstance> stats;
 	private Inventory inventory = Bukkit.getServer().createInventory(null, InventoryType.PLAYER);;
 	private Location location = Damocles.getDefaultWorld().getSpawnLocation();
 	
@@ -33,6 +35,10 @@ public class Character {
 		this.uuid = uuid;
 		this.config = config;
 		this.id = id;
+		this.stats = new ArrayList<>();
+		for(Stat stat : Stat.values()) {
+			stats.add(new StatInstance(stat, 0));
+		}
 		if(config.isNewFile()) {
 			getDefaultValues();
 			saveToFile();
@@ -53,6 +59,14 @@ public class Character {
 	
 	public int getID() {
 		return id;
+	}
+	
+	public StatInstance getStat(Stat stat) {
+		for(StatInstance instance : stats) {
+			if(instance.getStat() == stat)
+				return instance;
+		}
+		return null;
 	}
 	
 	public void heal(int amount) {
@@ -117,6 +131,9 @@ public class Character {
 		for(Attribute attribute : Attribute.values()) {
 			setAttributeValue(attribute, config.config.getDouble(attribute.toString()));
 		}
+		for(Stat stat : Stat.values()) {
+			getStat(stat).setValue(config.config.getInt("Stat."+stat.toString()));
+		}
 		setUsername(config.config.getString("username"));
 		setNature(Nature.valueOf(config.config.getString("nature")));
 		setLocation(getSavedLocation());
@@ -126,6 +143,9 @@ public class Character {
 	public void saveToFile() {
 		for(Attribute attribute : Attribute.values()) {
 			config.config.set(attribute.toString(), getAttributeValue(attribute));
+		}
+		for(Stat stat : Stat.values()) {
+			config.config.set("Stat."+stat.toString(), getStat(stat).getValue());
 		}
 		config.config.set("username", getUsername());
 		config.config.set("nature", getNature().toString());
@@ -138,6 +158,9 @@ public class Character {
 		ConfigFile file = new ConfigFile(Damocles.directories.DAMOCLES, "CHARACTER_DEFAULTS.yml");
 		for(Attribute attribute : Attribute.values()) {
 			setAttributeValue(attribute, file.config.getDouble(attribute.toString()));
+		}
+		for(Stat stat : Stat.values()) {
+			getStat(stat).setValue(file.config.getInt("Stat."+stat.toString()));
 		}
 	}
 	
@@ -176,10 +199,6 @@ public class Character {
 		inventories.add(hashInventory);
 		config.config.set("inventory", inventories);
 		config.save();
-	}
-	
-	public enum Attribute{
-		HEALTH, MAX_HEALTH, BASE_MAX_HEALTH, MANA, MAX_MANA, SPEED, SOULS, LEVEL, EXPERIENCE,
 	}
 	
 }

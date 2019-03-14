@@ -1,4 +1,4 @@
-package ca.damocles.IO;
+package ca.damocles.FileIO;
 
 import java.io.File;
 import java.io.IOException;

@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import ca.damocles.Account.Account;
 import ca.damocles.Account.Character.Character;
-import ca.damocles.Account.Character.Character.Attribute;
+import ca.damocles.Account.Character.Attribute;
 
 public class LoginMenu extends Menu{
 	
