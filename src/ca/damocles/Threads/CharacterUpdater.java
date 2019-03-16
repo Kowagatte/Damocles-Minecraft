@@ -4,6 +4,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
 import ca.damocles.Account.Character.Character;
+import ca.damocles.Account.Character.Property.PropertyType;
 
 public class CharacterUpdater extends Thread{
 	
@@ -40,23 +41,23 @@ public class CharacterUpdater extends Thread{
 				count++;
 				
 				//MAXHEALTH & OVERFLOW UPDATES
-				player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(character.getAttributeValue(ca.damocles.Account.Character.Attribute.BASE_MAX_HEALTH));
-				character.setAttributeValue(ca.damocles.Account.Character.Attribute.MAX_HEALTH, player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-				if(character.getAttributeValue(ca.damocles.Account.Character.Attribute.HEALTH) > character.getAttributeValue(ca.damocles.Account.Character.Attribute.MAX_HEALTH)) {
-					character.setAttributeValue(ca.damocles.Account.Character.Attribute.HEALTH, character.getAttributeValue(ca.damocles.Account.Character.Attribute.MAX_HEALTH));
+				player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue((double)character.getProperty(PropertyType.BASE_MAX_HEALTH).getValue());
+				character.getProperty(PropertyType.MAX_HEALTH).setValue(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+				if((double)character.getProperty(PropertyType.HEALTH).getValue() > (double)character.getProperty(PropertyType.MAX_HEALTH).getValue()) {
+					character.getProperty(PropertyType.HEALTH).setValue((double)character.getProperty(PropertyType.MAX_HEALTH).getValue());
 				}
 				
 				//EXP UPDATES
-				player.setLevel((int)character.getAttributeValue(ca.damocles.Account.Character.Attribute.LEVEL));
-				double expRatio = character.getAttributeValue(ca.damocles.Account.Character.Attribute.EXPERIENCE) / character.getExperienceToNextLevel();
+				player.setLevel((int)character.getProperty(PropertyType.LEVEL).getValue());
+				double expRatio = (double)character.getProperty(PropertyType.EXPERIENCE).getValue() / character.getExperienceToNextLevel();
 				player.setExp((float)expRatio);
 				
 				//HEALTH UPDATE
 				if(!player.isDead())
-					player.setHealth(character.getAttributeValue(ca.damocles.Account.Character.Attribute.HEALTH));
+					player.setHealth((double)character.getProperty(PropertyType.HEALTH).getValue());
 				
 				//MANA UPDATE
-				player.setFoodLevel((int)character.getAttributeValue(ca.damocles.Account.Character.Attribute.MANA));
+				player.setFoodLevel((int)character.getProperty(PropertyType.MANA).getValue());
 				
 				//REGEN
 				if(count == 20) {

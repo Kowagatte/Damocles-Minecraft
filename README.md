@@ -5,11 +5,12 @@
 
 - [x] Auto Dependency Install / Plugin Shading - Day
 - [x] Character Creation - 2 Days
-- [x] Character level algorith (Based on pokemon) - Hours
-- [ ] Experience algorith (Based on pokemon Gen VII) - Hours
+- [x] Character level Algorithm (Based on Pokemon) - Hours
+- [ ] Experience algorithm (Based on Pokemon Gen VII) - Hours
+- [ ] Damage Rewrite - Don't know, Damage is super ugly
 - [ ] Character Stats/Display - Half a day
 - [ ] Mining - Half a Day
-- [ ] Smithing - Day
+- [ ] Blacksmithing - Day
 - [ ] Souls - Hours
 - [ ] Anvils - Hours
 - [ ] Runes/Enchantments - Day
@@ -21,6 +22,9 @@
 - [ ] Trading/Banks - Half a day
 - [ ] Duelling - Hours
 - [ ] Safe-Zones - Unknown
+
+
+
 
 ![licence](https://imgur.com/Y5kHTx2.png)
 

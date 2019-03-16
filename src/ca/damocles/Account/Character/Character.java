@@ -13,6 +13,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import ca.damocles.Damocles;
+import ca.damocles.Account.Character.Property.DoubleProperty;
+import ca.damocles.Account.Character.Property.GenericProperty;
+import ca.damocles.Account.Character.Property.IntProperty;
+import ca.damocles.Account.Character.Property.Property;
+import ca.damocles.Account.Character.Property.PropertyType;
+import ca.damocles.Account.Character.Stat.Stat;
+import ca.damocles.Account.Character.Stat.StatInstance;
 import ca.damocles.FileIO.ConfigFile;
 import ca.damocles.Threads.CharacterUpdater;
 
@@ -24,10 +31,10 @@ public class Character {
 	private UUID uuid;
 	private CharacterUpdater updater;
 	
-	private Map<Attribute, Double> attributes = new HashMap<Attribute, Double>();
 	private Nature nature = Nature.getRandomNature();
 	private String username = "UNKNOWN";
 	private List<StatInstance> stats = new ArrayList<>();
+	private List<Property> properties = new ArrayList<>();
 	private Inventory inventory = Bukkit.getServer().createInventory(null, InventoryType.PLAYER);;
 	private Location location = Damocles.getDefaultWorld().getSpawnLocation();
 	
@@ -35,9 +42,6 @@ public class Character {
 		this.uuid = uuid;
 		this.config = config;
 		this.id = id;
-		for(Stat stat : Stat.values()) {
-			stats.add(new StatInstance(stat, 0));
-		}
 		if(config.isNewFile()) {
 			getDefaultValues();
 			saveToFile();
@@ -69,24 +73,31 @@ public class Character {
 	}
 	
 	public void heal(int amount) {
-		double difference = getAttributeValue(Attribute.MAX_HEALTH) - getAttributeValue(Attribute.HEALTH);
+		double difference = (double)getProperty(PropertyType.MAX_HEALTH).getValue() - (double)getProperty(PropertyType.HEALTH).getValue();
 		if(difference >= amount) {
-			setAttributeValue(Attribute.HEALTH, getAttributeValue(Attribute.HEALTH) + amount);
+			getProperty(PropertyType.HEALTH).setValue((double)getProperty(PropertyType.HEALTH).getValue() + amount);
 		}else {
-			setAttributeValue(Attribute.HEALTH, getAttributeValue(Attribute.MAX_HEALTH));
+			getProperty(PropertyType.HEALTH).setValue((double)getProperty(PropertyType.MAX_HEALTH).getValue());
 		}
 	}
 	
-	public double getAttributeValue(Attribute attribute) {
-		return attributes.get(attribute);
+	public Property getProperty(PropertyType type) {
+		for(Property property : properties) {
+			if(property.getType() == type) {
+				return property;
+			}
+		}
+		return null;
 	}
 	
-	public void setAttributeValue(Attribute attribute, double value) {
-		if(attributes.containsKey(attribute)) {
-			attributes.replace(attribute, value);
-			return;
+	public void addProperty(Property prop) {
+		for(Property property : properties) {
+			if(property.getType() == prop.getType()) {
+				properties.set(properties.indexOf(property), prop);
+				return;
+			}
 		}
-		attributes.put(attribute, value);
+		properties.add(prop);
 		return;
 	}
 	
@@ -99,21 +110,21 @@ public class Character {
 	}
 	
 	public void addExperience(int experience) {
-		int neededExperience = (int) (getAttributeValue(Attribute.EXPERIENCE) + getExperienceToNextLevel());
-		int projectedExperience = (int) (getAttributeValue(Attribute.EXPERIENCE) + experience);
+		int neededExperience = (int)getProperty(PropertyType.EXPERIENCE).getValue() + getExperienceToNextLevel();
+		int projectedExperience = (int) ((int)getProperty(PropertyType.EXPERIENCE).getValue() + experience);
 		if(projectedExperience >= neededExperience) {
 			levelUp();
 		}
-		setAttributeValue(Attribute.EXPERIENCE, projectedExperience);
+		getProperty(PropertyType.EXPERIENCE).setValue(projectedExperience);
 	}
 	
 	public void levelUp() {
-		setAttributeValue(Attribute.LEVEL, getAttributeValue(Attribute.LEVEL) + 1);
+		getProperty(PropertyType.LEVEL).setValue((int)getProperty(PropertyType.LEVEL).getValue() + 1);
 		//TODO LEVELUP
 	}
 	
-	public double getExperienceToNextLevel() {
-		return new Level((int)getAttributeValue(Attribute.LEVEL), getNature()).experienceToNextLevel();
+	public int getExperienceToNextLevel() {
+		return new Level((int)getProperty(PropertyType.LEVEL).getValue(), getNature()).experienceToNextLevel();
 	}
 	
 	public Location getLocation() {
@@ -141,9 +152,7 @@ public class Character {
 	}
 	
 	public void loadFromFile() {
-		for(Attribute attribute : Attribute.values()) {
-			setAttributeValue(attribute, config.config.getDouble(attribute.toString()));
-		}
+		loadProperties(config);
 		for(Stat stat : Stat.values()) {
 			getStat(stat).setValue(config.config.getInt("Stat."+stat.toString()));
 		}
@@ -154,8 +163,8 @@ public class Character {
 	}
 	
 	public void saveToFile() {
-		for(Attribute attribute : Attribute.values()) {
-			config.config.set(attribute.toString(), getAttributeValue(attribute));
+		for(Property property : properties) {
+			config.config.set(property.getName(), property.getValue());
 		}
 		for(Stat stat : Stat.values()) {
 			config.config.set("Stat."+stat.toString(), getStat(stat).getValue());
@@ -169,11 +178,29 @@ public class Character {
 	
 	public void getDefaultValues() {
 		ConfigFile file = new ConfigFile(Damocles.directories.DAMOCLES, "CHARACTER_DEFAULTS.yml");
-		for(Attribute attribute : Attribute.values()) {
-			setAttributeValue(attribute, file.config.getDouble(attribute.toString()));
-		}
+		loadProperties(file);
 		for(Stat stat : Stat.values()) {
-			getStat(stat).setValue(file.config.getInt("Stat."+stat.toString()));
+			String path = "Stat."+stat.toString();
+			if(file.config.get(path) != null) {
+				if(file.config.isInt(path)) {
+					stats.add(new StatInstance(stat, file.config.getInt(path)));
+				}
+			}
+		}
+	}
+	
+	public void loadProperties(ConfigFile file) {
+		for(PropertyType type : PropertyType.values()) {
+			String path = type.toString();
+			if(file.config.get(path) != null) {
+				if(file.config.isInt(path)) {
+					addProperty(new IntProperty(type, new Integer(file.config.getInt(path))));
+				}else if(file.config.isDouble(path)) {
+					addProperty(new DoubleProperty(type, new Double(file.config.getDouble(path))));
+				}else {
+					addProperty(new GenericProperty(type, file.config.get(path)));
+				}
+			}
 		}
 	}
 	
