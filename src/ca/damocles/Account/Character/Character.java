@@ -27,7 +27,7 @@ public class Character {
 	private Map<Attribute, Double> attributes = new HashMap<Attribute, Double>();
 	private Nature nature = Nature.getRandomNature();
 	private String username = "UNKNOWN";
-	private List<StatInstance> stats;
+	private List<StatInstance> stats = new ArrayList<>();
 	private Inventory inventory = Bukkit.getServer().createInventory(null, InventoryType.PLAYER);;
 	private Location location = Damocles.getDefaultWorld().getSpawnLocation();
 	
@@ -35,7 +35,6 @@ public class Character {
 		this.uuid = uuid;
 		this.config = config;
 		this.id = id;
-		this.stats = new ArrayList<>();
 		for(Stat stat : Stat.values()) {
 			stats.add(new StatInstance(stat, 0));
 		}
@@ -99,7 +98,7 @@ public class Character {
 		this.nature = nature;
 	}
 	
-	public int getExperienceToNextLevel() {
+	public double getExperienceToNextLevel() {
 		return new Level((int)getAttributeValue(Attribute.LEVEL), getNature()).experienceToNextLevel();
 	}
 	

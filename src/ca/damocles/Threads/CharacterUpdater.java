@@ -49,8 +49,7 @@ public class CharacterUpdater extends Thread{
 				//EXP UPDATES
 				player.setLevel((int)character.getAttributeValue(ca.damocles.Account.Character.Attribute.LEVEL));
 				double expRatio = character.getAttributeValue(ca.damocles.Account.Character.Attribute.EXPERIENCE) / character.getExperienceToNextLevel();
-				player.setExp(0.0f);
-				player.setExp((float)(expRatio * (double)player.getExpToLevel()));
+				player.setExp((float)expRatio);
 				
 				//HEALTH UPDATE
 				if(!player.isDead())
