@@ -70,7 +70,6 @@ public class Cardinal extends JavaPlugin{
 			file.createNewFile();
 			Damocles.directories.CLAN.mkdir();
 			Damocles.directories.PLAYERS.mkdir();
-			//TODO FIRST TIME SETUP
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 	

@@ -98,6 +98,20 @@ public class Character {
 		this.nature = nature;
 	}
 	
+	public void addExperience(int experience) {
+		int neededExperience = (int) (getAttributeValue(Attribute.EXPERIENCE) + getExperienceToNextLevel());
+		int projectedExperience = (int) (getAttributeValue(Attribute.EXPERIENCE) + experience);
+		if(projectedExperience >= neededExperience) {
+			levelUp();
+		}
+		setAttributeValue(Attribute.EXPERIENCE, projectedExperience);
+	}
+	
+	public void levelUp() {
+		setAttributeValue(Attribute.LEVEL, getAttributeValue(Attribute.LEVEL) + 1);
+		//TODO LEVELUP
+	}
+	
 	public double getExperienceToNextLevel() {
 		return new Level((int)getAttributeValue(Attribute.LEVEL), getNature()).experienceToNextLevel();
 	}
