@@ -49,7 +49,7 @@ public class Damocles {
 		for(File folder : directories.listAllSubDirectories(directories.PLAYERS)) {
 			for(File player : directories.listAllFilesInDirectory(folder)) {
 				if(!player.getName().contains("info"))
-					names.add(new ConfigFile(player.getParentFile(), player.getName()).config.getString("username"));
+					names.add(new ConfigFile(player.getParentFile(), player.getName()).getString("username"));
 			}
 		}
 		return names;

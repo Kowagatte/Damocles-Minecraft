@@ -1,32 +1,26 @@
 package ca.damocles.Account.Character;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
 import ca.damocles.Damocles;
-import ca.damocles.Account.Character.Property.DoubleProperty;
-import ca.damocles.Account.Character.Property.GenericProperty;
-import ca.damocles.Account.Character.Property.IntProperty;
 import ca.damocles.Account.Character.Property.Property;
 import ca.damocles.Account.Character.Property.PropertyType;
 import ca.damocles.Account.Character.Stat.Stat;
 import ca.damocles.Account.Character.Stat.StatInstance;
+import ca.damocles.FileIO.CharacterConfigFile;
 import ca.damocles.FileIO.ConfigFile;
 import ca.damocles.Threads.CharacterUpdater;
 
 public class Character {
 	
 	private final int id;
-	public ConfigFile config;
+	public CharacterConfigFile config;
 	 
 	private UUID uuid;
 	private CharacterUpdater updater;
@@ -40,13 +34,13 @@ public class Character {
 	
 	public Character(UUID uuid, int id, ConfigFile config) {
 		this.uuid = uuid;
-		this.config = config;
+		this.config = (CharacterConfigFile)config;
 		this.id = id;
 		if(config.isNewFile()) {
-			getDefaultValues();
-			saveToFile();
+			this.config.getDefaultValues();
+			this.config.saveToFile();
 		}
-		loadFromFile();
+		this.config.loadCharacter();
 	}
 	
 	public void login() {
@@ -57,11 +51,19 @@ public class Character {
 		updater.setActive(false);
 		if(!updater.isInterrupted())
 			updater.interrupt();
-		saveToFile();
+		config.saveToFile();
 	}
 	
 	public int getID() {
 		return id;
+	}
+	
+	public List<Property> getProperties(){
+		return properties;
+	}
+	
+	public List<StatInstance> getStats(){
+		return stats;
 	}
 	
 	public StatInstance getStat(Stat stat) {
@@ -98,6 +100,17 @@ public class Character {
 			}
 		}
 		properties.add(prop);
+		return;
+	}
+	
+	public void addStat(StatInstance add) {
+		for(StatInstance stat : stats) {
+			if(stat.getStat() == add.getStat()) {
+				stats.set(stats.indexOf(stat), add);
+				return;
+			}
+		}
+		stats.add(add);
 		return;
 	}
 	
@@ -149,96 +162,6 @@ public class Character {
 	
 	public void setUsername(String username) {
 		this.username = username;
-	}
-	
-	public void loadFromFile() {
-		loadProperties(config);
-		for(Stat stat : Stat.values()) {
-			getStat(stat).setValue(config.config.getInt("Stat."+stat.toString()));
-		}
-		setUsername(config.config.getString("username"));
-		setNature(Nature.valueOf(config.config.getString("nature")));
-		setLocation(getSavedLocation());
-		setInventory(getSavedInventory());
-	}
-	
-	public void saveToFile() {
-		for(Property property : properties) {
-			config.config.set(property.getName(), property.getValue());
-		}
-		for(Stat stat : Stat.values()) {
-			config.config.set("Stat."+stat.toString(), getStat(stat).getValue());
-		}
-		config.config.set("username", getUsername());
-		config.config.set("nature", getNature().toString());
-		config.save();
-		setSavedInventory(getInventory());
-		setSavedLocation(getLocation());
-	}
-	
-	public void getDefaultValues() {
-		ConfigFile file = new ConfigFile(Damocles.directories.DAMOCLES, "CHARACTER_DEFAULTS.yml");
-		loadProperties(file);
-		for(Stat stat : Stat.values()) {
-			String path = "Stat."+stat.toString();
-			if(file.config.get(path) != null) {
-				if(file.config.isInt(path)) {
-					stats.add(new StatInstance(stat, file.config.getInt(path)));
-				}
-			}
-		}
-	}
-	
-	public void loadProperties(ConfigFile file) {
-		for(PropertyType type : PropertyType.values()) {
-			String path = type.toString();
-			if(file.config.get(path) != null) {
-				if(file.config.isInt(path)) {
-					addProperty(new IntProperty(type, new Integer(file.config.getInt(path))));
-				}else if(file.config.isDouble(path)) {
-					addProperty(new DoubleProperty(type, new Double(file.config.getDouble(path))));
-				}else {
-					addProperty(new GenericProperty(type, file.config.get(path)));
-				}
-			}
-		}
-	}
-	
-	public Location getSavedLocation() {
-		String string = config.config.getString("location");
-		String[] s = string.split("/");
-		return new Location(Bukkit.getServer().getWorld(s[0]), Double.valueOf(s[1]), Double.valueOf(s[2]), Double.valueOf(s[3]), Float.valueOf(s[4]), Float.valueOf(s[5]));
-	}
-	
-	public void setSavedLocation(Location location) {
-		config.config.set("location", location.getWorld().getName()+"/"+location.getX()+"/"+location.getY()+"/"+location.getZ()+"/"+location.getYaw()+"/"+location.getPitch());
-		config.save();
-	}
-	
-	public Inventory getSavedInventory(){
-		List<Map<?, ?>> inventories = config.config.getMapList("inventory");
-		@SuppressWarnings("unchecked")
-		HashMap<Integer, ItemStack> hashInventory = (HashMap<Integer, ItemStack>) inventories.get(0);
-		Inventory inv = Bukkit.createInventory(null, InventoryType.PLAYER);
-		for(Integer i : hashInventory.keySet()){
-			ItemStack item = hashInventory.get(i);
-			inv.setItem(i, item);
-		}
-		return inv;
-	}
-	
-	public void setSavedInventory(Inventory inventory){
-		List<Map<?, ?>> inventories = config.config.getMapList("inventory");
-		HashMap<Integer, ItemStack> hashInventory = new HashMap<Integer, ItemStack>();
-		for(int i = 0; i < inventory.getSize(); i++){
-			ItemStack item = inventory.getItem(i);
-			if(item != null)
-				hashInventory.put(i, item);
-			
-		}
-		inventories.add(hashInventory);
-		config.config.set("inventory", inventories);
-		config.save();
 	}
 	
 }

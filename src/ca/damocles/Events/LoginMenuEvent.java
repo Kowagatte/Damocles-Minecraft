@@ -35,7 +35,7 @@ public class LoginMenuEvent implements Listener{
 				}
 				int i = account.createNewCharacter();
 				account.characters.get(i).setUsername(reply);
-				account.characters.get(i).saveToFile();
+				account.characters.get(i).config.saveToFile();
 				return null;
 			}
 			account.setStatus(AccountStatus.CREATING_CHARACTER);

@@ -124,13 +124,13 @@ public class Account {
 	}
 	
 	private void loadInfo() {
-		priviledge = Priviledge.valueOf(config.config.getString("priviledge"));
-		maxNumberOfCharacters = config.config.getInt("max_number_of_characters");
+		priviledge = Priviledge.valueOf(config.getString("priviledge"));
+		maxNumberOfCharacters = config.getInt("max_number_of_characters");
 	}
 	
 	public void saveInfo() {
-		config.config.set("priviledge", priviledge.toString());
-		config.config.set("max_number_of_characters", maxNumberOfCharacters);
+		config.set("priviledge", priviledge.toString());
+		config.set("max_number_of_characters", maxNumberOfCharacters);
 		config.save();
 	}
 	
