@@ -2,7 +2,6 @@
 ![](https://imgur.com/U0ZK1gD.png)
 
 ## Todo
-
 - [x] Auto Dependency Install / Plugin Shading - Day
 - [x] Character Creation - 2 Days
 - [x] Character level Algorithm (Based on Pokemon) - Hours
@@ -22,9 +21,7 @@
 - [ ] Trading/Banks - Half a day
 - [ ] Duelling - Hours
 - [ ] Safe-Zones - Unknown
-
-
-
+### [Design Information](https://docs.google.com/spreadsheets/d/1crru-bmjbyu4amSqb17ebbjJB2nkD-ZYVVKa3Fq2YNI/edit#gid=0)
 
 ![licence](https://imgur.com/Y5kHTx2.png)
 

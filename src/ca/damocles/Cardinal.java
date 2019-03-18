@@ -13,6 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.quickprogrammingtips.ASCIIArtGenerator;
 import com.quickprogrammingtips.ASCIIArtGenerator.ASCIIArtFont;
 
+import ca.damocles.Events.DamageListener;
 import ca.damocles.Events.LoginMenuEvent;
 import ca.damocles.Events.PlayerJoin;
 import ca.damocles.Events.PlayerLeave;
@@ -47,6 +48,7 @@ public class Cardinal extends JavaPlugin{
 		Bukkit.getPluginManager().registerEvents(new PlayerShiftClick(), this);
 		Bukkit.getPluginManager().registerEvents(new CancelRegen(), this);
 		Bukkit.getPluginManager().registerEvents(new CancelStarvation(), this);
+		Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
 	}
 	
 	public void registerConfig(){
