@@ -87,17 +87,17 @@ public class LoginMenu extends Menu{
 		public void update() {
 			item = menu.createItem(character.getUsername(), new String[] {
 					"",
-					ChatColor.GRAY + "Level: " + (int)character.getProperty(PropertyType.LEVEL).getValue(),
-					ChatColor.GRAY+ "Exp: "+ (int)character.getProperty(PropertyType.EXPERIENCE).getValue() +"/"+ character.getExperienceToNextLevel(),
+					ChatColor.GRAY + "Level: " + character.getProperty(PropertyType.LEVEL).getValue(),
+					ChatColor.GRAY+ "Exp: "+ character.getProperty(PropertyType.EXPERIENCE).getValue() +"/"+ character.getExperienceToNextLevel(),
 					ChatColor.GRAY+ "Ability Points: ",
 					"",
 					ChatColor.GRAY+ "Strength: "+" Agility: ",
 					ChatColor.GRAY+ "Hitpoints: "+" Intelligence: ",
 					"",
-					ChatColor.GRAY+"Base Max Health: "+(int)character.getProperty(PropertyType.BASE_MAX_HEALTH).getValue(),
-					ChatColor.GRAY+"Max Health: "+(int)character.getProperty(PropertyType.MAX_HEALTH).getValue(),
-					ChatColor.GRAY+"Max Mana: "+(int)character.getProperty(PropertyType.MAX_MANA).getValue(),
-					ChatColor.GRAY+"Speed: "+(double)character.getProperty(PropertyType.SPEED).getValue(),
+					ChatColor.GRAY+"Base Max Health: "+character.getProperty(PropertyType.BASE_MAX_HEALTH).getValue(),
+					ChatColor.GRAY+"Max Health: "+character.getProperty(PropertyType.MAX_HEALTH).getValue(),
+					ChatColor.GRAY+"Max Mana: "+character.getProperty(PropertyType.MAX_MANA).getValue(),
+					ChatColor.GRAY+"Speed: "+character.getProperty(PropertyType.SPEED).getValue(),
 					"",
 					}, Material.EMERALD_BLOCK);
 		}

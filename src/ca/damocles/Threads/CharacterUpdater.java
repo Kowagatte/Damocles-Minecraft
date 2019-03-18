@@ -49,7 +49,7 @@ public class CharacterUpdater extends Thread{
 				
 				//EXP UPDATES
 				player.setLevel((int)character.getProperty(PropertyType.LEVEL).getValue());
-				double expRatio = (double)character.getProperty(PropertyType.EXPERIENCE).getValue() / character.getExperienceToNextLevel();
+				double expRatio = (double)((int)character.getProperty(PropertyType.EXPERIENCE).getValue() / character.getExperienceToNextLevel());
 				player.setExp((float)expRatio);
 				
 				//HEALTH UPDATE
@@ -57,7 +57,7 @@ public class CharacterUpdater extends Thread{
 					player.setHealth((double)character.getProperty(PropertyType.HEALTH).getValue());
 				
 				//MANA UPDATE
-				player.setFoodLevel((int)character.getProperty(PropertyType.MANA).getValue());
+				player.setFoodLevel((int)((double)character.getProperty(PropertyType.MANA).getValue()));
 				
 				//REGEN
 				if(count == 20) {

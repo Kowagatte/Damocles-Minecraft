@@ -82,7 +82,7 @@ public class Account {
 			}
 		}
 		goodID++;
-		characters.put(goodID, new Character(uuid, goodID, new ConfigFile(directory, goodID+".yml")));
+		characters.put(goodID, new Character(uuid, goodID));
 		return goodID;
 	}
 	
@@ -100,7 +100,7 @@ public class Account {
 		for(File file : Damocles.directories.listAllFilesInDirectory(directory)) {
 			if(!file.getName().contains("info")) {
 				int id = Integer.valueOf(file.getName().replace(".yml", ""));
-				characters.put(id, new Character(uuid, id, new ConfigFile(directory, file.getName())));
+				characters.put(id, new Character(uuid, id));
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package ca.damocles.Account.Character;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +15,6 @@ import ca.damocles.Account.Character.Property.PropertyType;
 import ca.damocles.Account.Character.Stat.Stat;
 import ca.damocles.Account.Character.Stat.StatInstance;
 import ca.damocles.FileIO.CharacterConfigFile;
-import ca.damocles.FileIO.ConfigFile;
 import ca.damocles.Threads.CharacterUpdater;
 
 public class Character {
@@ -32,9 +32,9 @@ public class Character {
 	private Inventory inventory = Bukkit.getServer().createInventory(null, InventoryType.PLAYER);;
 	private Location location = Damocles.getDefaultWorld().getSpawnLocation();
 	
-	public Character(UUID uuid, int id, ConfigFile config) {
+	public Character(UUID uuid, int id) {
 		this.uuid = uuid;
-		this.config = (CharacterConfigFile)config;
+		this.config = new CharacterConfigFile(new File(Damocles.directories.PLAYERS, uuid.toString()), id+".yml", this);
 		this.id = id;
 		if(config.isNewFile()) {
 			this.config.getDefaultValues();
