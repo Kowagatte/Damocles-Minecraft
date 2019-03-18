@@ -25,7 +25,7 @@ public class CharacterConfigFile extends ConfigFile{
 	public void loadCharacter() {
 		loadProperties(this);
 		for(Stat stat : Stat.values()) {
-			character.getStat(stat).setValue(getInt("Stat."+stat.toString()));
+			character.addStat(new StatInstance(stat, getInt("Stat."+stat.toString())));
 		}
 		character.setUsername(getString("username"));
 		character.setNature(Nature.valueOf(getString("nature")));
