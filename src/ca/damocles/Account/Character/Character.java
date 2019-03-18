@@ -74,12 +74,21 @@ public class Character {
 		return null;
 	}
 	
-	public void heal(int amount) {
+	public void heal(double amount) {
 		double difference = (double)getProperty(PropertyType.MAX_HEALTH).getValue() - (double)getProperty(PropertyType.HEALTH).getValue();
 		if(difference >= amount) {
 			getProperty(PropertyType.HEALTH).setValue((double)getProperty(PropertyType.HEALTH).getValue() + amount);
 		}else {
 			getProperty(PropertyType.HEALTH).setValue((double)getProperty(PropertyType.MAX_HEALTH).getValue());
+		}
+	}
+	
+	public void regenMana(double amount) {
+		double difference = (double)getProperty(PropertyType.MAX_MANA).getValue() - (double)getProperty(PropertyType.MANA).getValue();
+		if(difference >= amount) {
+			getProperty(PropertyType.MANA).setValue((double)getProperty(PropertyType.MANA).getValue() + amount);
+		}else {
+			getProperty(PropertyType.MANA).setValue((double)getProperty(PropertyType.MAX_MANA).getValue());
 		}
 	}
 	

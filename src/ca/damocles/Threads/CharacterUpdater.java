@@ -39,6 +39,13 @@ public class CharacterUpdater extends Thread{
 			lastTime = now;
 			if(delta >= 1) {
 				count++;
+				if(count == 10) {
+					character.regenMana(1);
+				}else if(count == 20) {
+					count = 0;
+					character.regenMana(1);
+					character.heal(1);
+				}
 				
 				//MAXHEALTH & OVERFLOW UPDATES
 				player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue((double)character.getProperty(PropertyType.BASE_MAX_HEALTH).getValue());
@@ -59,11 +66,6 @@ public class CharacterUpdater extends Thread{
 				//MANA UPDATE
 				player.setFoodLevel((int)((double)character.getProperty(PropertyType.MANA).getValue()));
 				
-				//REGEN
-				if(count == 20) {
-					count = 0;
-					character.heal(1);
-				}
 				delta--;
 			}
 		}
