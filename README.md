@@ -21,7 +21,7 @@
 - [ ] Trading/Banks - Half a day
 - [ ] Duelling - Hours
 - [ ] Safe-Zones - Unknown
-### [Design Information](https://docs.google.com/spreadsheets/d/1crru-bmjbyu4amSqb17ebbjJB2nkD-ZYVVKa3Fq2YNI/edit#gid=0)
+### [Design Information](https://docs.google.com/spreadsheets/d/1crru-bmjbyu4amSqb17ebbjJB2nkD-ZYVVKa3Fq2YNI/edit?usp=sharing)
 
 ![licence](https://imgur.com/Y5kHTx2.png)
 
