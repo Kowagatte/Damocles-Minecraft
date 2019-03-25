@@ -1,6 +1,6 @@
 package ca.damocles.Runes;
 
-public class Rune {
+public abstract class Rune {
 	
 	int id;
 	
@@ -10,6 +10,18 @@ public class Rune {
 	
 	public int getID() {
 		return id;
+	}
+	
+	public abstract int getMaxLevel();
+	
+	public abstract Runes getRune();
+	
+	public abstract String getName();
+	
+	public enum Runes {
+		LIFESTEAL, SPEED, VOLLEY,
+		SNARE, BLOODTHIRST, PROTECTION,
+		SHARPENED, FLAME_ASPECT;
 	}
 	
 }
