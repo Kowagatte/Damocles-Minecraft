@@ -2,9 +2,11 @@ package ca.damocles.Items;
 
 public enum ItemType {
 	MINECRAFT_ITEM,
-	ARMOR,
+	HELMET,
+	CHESTPLATE,
+	LEGS,
+	BOOTS,
 	RING,
 	BOW,
 	SWORD;
-	
 }
