@@ -2,30 +2,30 @@ package ca.damocles.Runes;
 
 import ca.damocles.Items.ItemType;
 
-public class LifeSteal extends Rune{
+public class Sharpened extends Rune{
 
-	public LifeSteal(int id) {
+	public Sharpened(int id) {
 		super(id);
 	}
-	
+
 	@Override
 	public int getMaxLevel() {
-		return 2;
+		return 5;
 	}
-	
+
 	@Override
 	public Runes getRune() {
-		return Runes.LIFESTEAL;
+		return Runes.SHARPENED;
 	}
 
 	@Override
 	public String getName() {
-		return "LifeSteal";
+		return "Sharpened";
 	}
 
 	@Override
 	public ItemType[] getApplicableItems() {
-		return new ItemType[]{ ItemType.SWORD };
+		return new ItemType[] {ItemType.SWORD};
 	}
 
 }

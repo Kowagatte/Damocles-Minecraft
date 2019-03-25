@@ -1,5 +1,7 @@
 package ca.damocles.Runes;
 
+import ca.damocles.Items.ItemType;
+
 public abstract class Rune {
 	
 	int id;
@@ -17,6 +19,8 @@ public abstract class Rune {
 	public abstract Runes getRune();
 	
 	public abstract String getName();
+	
+	public abstract ItemType[] getApplicableItems();
 	
 	public enum Runes {
 		LIFESTEAL, SPEED, VOLLEY,
