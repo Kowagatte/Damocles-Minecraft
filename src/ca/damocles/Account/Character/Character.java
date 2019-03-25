@@ -83,6 +83,17 @@ public class Character {
 		}
 	}
 	
+	public void damage(double damage) {
+		double newHealth = (double)getProperty(PropertyType.HEALTH).getValue() - damage;
+		if(newHealth < 0.0) {
+			getProperty(PropertyType.HEALTH).setValue((double)0.0);
+			return;
+		}else {
+			getProperty(PropertyType.HEALTH).setValue(newHealth);
+			return;
+		}
+	}
+	
 	public void regenMana(double amount) {
 		double difference = (double)getProperty(PropertyType.MAX_MANA).getValue() - (double)getProperty(PropertyType.MANA).getValue();
 		if(difference >= amount) {
