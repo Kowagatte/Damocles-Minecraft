@@ -1,13 +1,17 @@
 package ca.damocles.Items;
 
-import java.util.List;
+import java.util.Map;
 
 import ca.damocles.Runes.Rune;
 
 public interface Inscribable {
 	
-	public List<Rune> getAppliedRunes();
+	public Map<Rune, Integer> getAppliedRunes();
 	
 	public int getAvailableSlots();
+	
+	public void addRune(Rune rune, int level);
+	
+	public void setRunes();
 	
 }
