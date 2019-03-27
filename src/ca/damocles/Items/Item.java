@@ -1,32 +1,31 @@
 package ca.damocles.Items;
 
-import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.tags.ItemTagType;
 
-import net.minecraft.server.v1_13_R2.NBTTagCompound;
+import ca.damocles.Cardinal;
 
-public class Item {
+public abstract class Item {
 	
 	public ItemStack item;
-	public net.minecraft.server.v1_13_R2.ItemStack nmsStack;
-	public NBTTagCompound mainCompound;
+	public ItemMeta meta;
 	
 	public Item(ItemStack itemstack) {
 		item = itemstack;
-		nmsStack = CraftItemStack.asNMSCopy(itemstack);
-		mainCompound = (nmsStack.hasTag()) ? nmsStack.getTag() : new NBTTagCompound();
+		meta = item.getItemMeta();
 	}
 	
 	public ItemType getItemType() {
-		if(mainCompound.hasKey("type")) {
-			return ItemType.valueOf(mainCompound.getString("type"));
+		NamespacedKey itemKey = new NamespacedKey(Cardinal.getInstance(), "item");
+		if(meta.getCustomTagContainer().hasCustomTag(itemKey, ItemTagType.STRING)) {
+			return ItemType.valueOf(meta.getCustomTagContainer().getCustomTag(itemKey, ItemTagType.STRING));
 		}else {
 			return ItemType.MINECRAFT_ITEM;
 		}
 	}
 	
-	public ItemStack build() {
-		return CraftItemStack.asBukkitCopy(nmsStack);
-	}
+	public abstract ItemStack finish();
 	
 }

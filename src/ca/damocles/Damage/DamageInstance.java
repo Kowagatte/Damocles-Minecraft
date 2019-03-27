@@ -29,7 +29,7 @@ public class DamageInstance {
 	
 	private double finalDamage = 0.0;
 	
-	public DamageInstance(Builder builder) {
+	private DamageInstance(Builder builder) {
 		rawDamage = builder.rawDamage;
 		cause = builder.cause;
 		type = builder.type;

@@ -12,6 +12,4 @@ public interface Inscribable {
 	
 	public void addRune(Rune rune, int level);
 	
-	public void setRunes();
-	
 }
