@@ -6,6 +6,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.tags.ItemTagType;
 
 import ca.damocles.Cardinal;
+import ca.damocles.FileIO.CustomLore;
 
 public abstract class Item {
 	
@@ -24,6 +25,15 @@ public abstract class Item {
 		}else {
 			return ItemType.MINECRAFT_ITEM;
 		}
+	}
+	
+	public void setItemType(ItemType type) {
+		NamespacedKey itemKey = new NamespacedKey(Cardinal.getInstance(), "item");
+		meta.getCustomTagContainer().setCustomTag(itemKey, ItemTagType.STRING, type.toString());
+	}
+	
+	public void updateLore() {
+		meta.setLore(new CustomLore(getItemType()).getLore());
 	}
 	
 	public abstract ItemStack finish();

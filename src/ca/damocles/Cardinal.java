@@ -54,7 +54,7 @@ public class Cardinal extends JavaPlugin{
 	public void registerConfig(){
 		getConfig().options().copyDefaults(true);
 		saveConfig();
-		Damocles.directories.exportResource("/CHARACTER_DEFAULTS.yml");
+		Damocles.directories.exportResource("CHARACTER_DEFAULTS.yml", Damocles.directories.DAMOCLES);
 	}
 	
 	public boolean isFirstTime() {
@@ -72,6 +72,8 @@ public class Cardinal extends JavaPlugin{
 			file.createNewFile();
 			Damocles.directories.CLAN.mkdir();
 			Damocles.directories.PLAYERS.mkdir();
+			Damocles.directories.ITEM.mkdir();
+			Damocles.directories.ITEMLORES.mkdir();
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 	

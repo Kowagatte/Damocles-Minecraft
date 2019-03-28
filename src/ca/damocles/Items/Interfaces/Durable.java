@@ -1,4 +1,4 @@
-package ca.damocles.Items;
+package ca.damocles.Items.Interfaces;
 
 public interface Durable {
 	

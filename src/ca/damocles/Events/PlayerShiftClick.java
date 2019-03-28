@@ -6,6 +6,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
+import ca.damocles.Items.TextureID;
+import ca.damocles.Items.Factories.SwordFactory;
+
 public class PlayerShiftClick implements Listener{
 	
 	@EventHandler
@@ -13,7 +16,17 @@ public class PlayerShiftClick implements Listener{
 		if(event.getHand() == EquipmentSlot.HAND) {
 			if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 				if(event.getPlayer().isSneaking()) {
-					//Do nothing.
+					
+					
+					event.getPlayer().getInventory().addItem(
+							new SwordFactory(TextureID.BRONZE_SWORD.getID())
+							.setUpDurability(100)
+							.setDamage(7)
+							.setAttackSpeed(-2.4)
+							.build());
+				
+				
+				
 				}
 			}
 		}

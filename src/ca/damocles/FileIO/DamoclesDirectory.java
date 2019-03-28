@@ -17,6 +17,8 @@ public class DamoclesDirectory {
 	public File SERVER = PLUGIN.getParentFile();
 	public File CLAN = new File(DAMOCLES, "clan");
 	public File PLAYERS = new File(DAMOCLES, "players");
+	public File ITEM = new File(DAMOCLES, "item");
+	public File ITEMLORES = new File(ITEM, "lores");
 	
 	public List<File> listAllFilesInDirectory(File file){
 		List<File> files = new ArrayList<>();
@@ -42,18 +44,16 @@ public class DamoclesDirectory {
 		return files;
 	}
 	
-	public void exportResource(String resourceName) {
-		File file = new File(DAMOCLES, resourceName);
+	public File exportResource(String resourceName, File targetDirectory) {
+		File file = new File(targetDirectory, resourceName);
 		if(file.exists())
-			return;
+			return file;
 		try{
-			InputStream stream = Damocles.class.getResourceAsStream(resourceName);
+			InputStream stream = Damocles.class.getResourceAsStream("/"+resourceName);
 			Files.copy(stream, file.toPath());
 			stream.close();
-		}catch(NullPointerException | IOException e) {
-			e.printStackTrace();
-		}
-		return;
+		}catch(NullPointerException | IOException e) { e.printStackTrace(); }
+		return file;
 	}
 	
 }
