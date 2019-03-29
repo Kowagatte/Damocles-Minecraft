@@ -8,6 +8,7 @@ import org.bukkit.inventory.EquipmentSlot;
 
 import ca.damocles.Items.TextureID;
 import ca.damocles.Items.Factories.SwordFactory;
+import ca.damocles.Runes.Rune;
 
 public class PlayerShiftClick implements Listener{
 	
@@ -23,6 +24,7 @@ public class PlayerShiftClick implements Listener{
 							.setUpDurability(100)
 							.setDamage(7)
 							.setAttackSpeed(-2.4)
+							.addRune(Rune.SHARPENED, 4)
 							.build());
 				
 				

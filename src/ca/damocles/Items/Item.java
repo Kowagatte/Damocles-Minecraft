@@ -33,7 +33,7 @@ public abstract class Item {
 	}
 	
 	public void updateLore() {
-		meta.setLore(new CustomLore(getItemType()).getLore());
+		meta.setLore(new CustomLore(this).getLore());
 	}
 	
 	public abstract ItemStack finish();
