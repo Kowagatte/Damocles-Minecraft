@@ -40,6 +40,7 @@ public class Equipment extends Item implements Inscribable, Durable, Nameable{
 	public void addRune(Rune rune, int level) {
 		NamespacedKey runesKey = new NamespacedKey(Cardinal.getInstance(), "runes");
 		Map<Rune, Integer> runeMap = getAppliedRunes();
+		runeMap.put(rune, level);
 		List<String> runeElements = new ArrayList<>();
 		for(Rune k : runeMap.keySet()) {
 			runeElements.add(k.toString() + ":" + runeMap.get(k));
