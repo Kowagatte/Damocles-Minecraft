@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.ChatColor;
+
 import ca.damocles.Damocles;
 import ca.damocles.Items.Item;
 import ca.damocles.Items.ItemType;
@@ -60,7 +62,19 @@ public class CustomLore {
 		return false;
 	}
 	
+	public List<Character> getColorCodes(String line) {
+		List<Character> colorCodes = new ArrayList<>();
+		for(int i = 0; i < line.length(); i++) {
+			char c = line.charAt(i);
+			if(c == '\u00a7') {
+				colorCodes.add(line.charAt(i+1));
+			}
+		}
+		return colorCodes;
+	}
+	
 	public void replaceTagWithLines(String tag, String... newString) {
+		List<Character> colorCodes = new ArrayList<>();
 		List<String> before = new ArrayList<>(), after = new ArrayList<>(), end = new ArrayList<>();
 		boolean found = false;
 		for(String s : lines) {
@@ -71,18 +85,25 @@ public class CustomLore {
 					after.add(s);
 				}
 			}else {
+				colorCodes = getColorCodes(s);
 				found = true;
 			}
 		}
 		end.addAll(before);
 		for(String newLine : newString) {
-			end.add(newLine);
+			String editedLine = "";
+			for(Character c : colorCodes) {
+				editedLine = editedLine+'\u00a7'+c;
+			}
+			editedLine = editedLine+newLine;
+			end.add(editedLine);
 		}
 		end.addAll(after);
 		lines = end;
 	}
 	
 	public void replaceTagWithLines(String tag, List<String> newString) {
+		List<Character> colorCodes = new ArrayList<>();
 		List<String> before = new ArrayList<>(), after = new ArrayList<>(), end = new ArrayList<>();
 		boolean found = false;
 		for(String s : lines) {
@@ -93,11 +114,19 @@ public class CustomLore {
 					after.add(s);
 				}
 			}else {
+				colorCodes = getColorCodes(s);
 				found = true;
 			}
 		}
 		end.addAll(before);
-		end.addAll(newString);
+		for(String newLine : newString) {
+			String editedLine = "";
+			for(Character c : colorCodes) {
+				editedLine = editedLine+'\u00a7'+c;
+			}
+			editedLine = editedLine+newLine;
+			end.add(editedLine);
+		}
 		end.addAll(after);
 		lines = end;
 	}
