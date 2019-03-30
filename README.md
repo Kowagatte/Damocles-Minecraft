@@ -1,27 +1,49 @@
 # [Damocles](https://damocles.ca/) | MMORPG Minecraft Server Mod
 ![](https://imgur.com/U0ZK1gD.png)
 
+Hey! I'm a single guy working on this project, I have to do the sprite editing,
+programming, testing, concept write-ups, bug tracking. All by myself, so it is
+going to be a decently large and long journey. If you are interested, drop a star
+on the github so I know (It makes my heart fuzzy). I will try to keep daily commits
+going and hopefully push out a Beta release soon! - Nicholas N Ryan (Kowagatte).
+
+## At this very moment
+ - [ ] Custom item lore (Customizable in text files) - Couple Days, maybe sooner.
+
+## Currently Working On
+- [ ] Custom Item Blueprints - Day
+- [ ] Custom Item Models - Hours
+
 ## Todo
 - [x] Auto Dependency Install / Plugin Shading - Day
 - [x] Character Creation - 2 Days
 - [x] Character level Algorithm (Based on Pokemon) - Hours
-- [ ] Experience algorithm (Based on Pokemon Gen VII) - Hours
-- [ ] Damage Rewrite - Don't know, Damage is super ugly
-- [ ] Character Stats/Display - Half a day
 - [ ] Mining - Half a Day
 - [ ] Blacksmithing - Day
 - [ ] Souls - Hours
 - [ ] Anvils - Hours
 - [ ] Runes/Enchantments - Day
-- [ ] Custom Item Models - Hours
 - [ ] Spells/Spell-Packs/Spell-Books - Half a day
 - [ ] Clans - Day
 - [ ] Custom Mobs - 2 Days
 - [ ] Guilds/Parties - Half a day
 - [ ] Trading/Banks - Half a day
-- [ ] Duelling - Hours
-- [ ] Safe-Zones - Unknown
-### [Design Information](https://docs.google.com/spreadsheets/d/1crru-bmjbyu4amSqb17ebbjJB2nkD-ZYVVKa3Fq2YNI/edit?usp=sharing)
+- [ ] Dueling - Hours
+- [ ] Quests - Unknown
+- [ ] NPCs - Unknown
+- [ ] Zones (Safe zones, PvP zones, quest zones) - Unknown
+
+## TODO later (Stuff I can't finish until I finish other stuff)
+- [ ] Damage Rewrite - Don't know, Damage is super ugly
+- [ ] Experience algorithm (Based on Pokemon Gen VII) - Hours
+- [ ] Character Stats/Display - Half a day
+
+### Design updates
+All updates are live posted by me on my discord server!
+
+Come say hello and check out what I'm working on.
+
+[Discord Link Here!](https://discord.gg/q2xKbPh)
 
 ![licence](https://imgur.com/Y5kHTx2.png)
 
