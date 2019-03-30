@@ -74,6 +74,7 @@ public class Cardinal extends JavaPlugin{
 			Damocles.directories.PLAYERS.mkdir();
 			Damocles.directories.ITEM.mkdir();
 			Damocles.directories.ITEMLORES.mkdir();
+			Damocles.directories.exportResource("LoreTags.txt", Damocles.directories.ITEM);
 		} catch (IOException e) { e.printStackTrace(); }
 	}
 	

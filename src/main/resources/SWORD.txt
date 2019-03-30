@@ -1,1 +1,6 @@
-Testing
+§7${runes}
+
+§6Slots: ${slots}
+
+§8Damage: ${damage}
+§8AttackSpeed: ${attackSpeed}

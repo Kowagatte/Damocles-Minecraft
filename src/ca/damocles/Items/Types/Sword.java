@@ -36,4 +36,26 @@ public class Sword extends Equipment{
 		return;
 	}
 	
+	public int getDamage() {
+		if(meta.hasAttributeModifiers()) {
+			if(meta.getAttributeModifiers(Attribute.GENERIC_ATTACK_DAMAGE) != null) {
+				for(AttributeModifier modifier : meta.getAttributeModifiers(Attribute.GENERIC_ATTACK_DAMAGE)) {
+					return (int)modifier.getAmount();
+				}
+			}
+		}
+		return 0;
+	}
+	
+	public double getAttackSpeed() {
+		if(meta.hasAttributeModifiers()) {
+			if(meta.getAttributeModifiers(Attribute.GENERIC_ATTACK_SPEED) != null) {
+				for(AttributeModifier modifier : meta.getAttributeModifiers(Attribute.GENERIC_ATTACK_SPEED)) {
+					return modifier.getAmount();
+				}
+			}
+		}
+		return 0.0;
+	}
+	
 }

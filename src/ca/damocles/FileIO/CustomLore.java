@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bukkit.ChatColor;
-
 import ca.damocles.Damocles;
 import ca.damocles.Items.Item;
-import ca.damocles.Items.ItemType;
+import ca.damocles.Items.Interfaces.Durable;
 import ca.damocles.Items.Interfaces.Inscribable;
+import ca.damocles.Items.Types.Sword;
 import ca.damocles.Runes.Rune;
 import ca.damocles.utils.RomanNumeral;
 
@@ -62,7 +61,7 @@ public class CustomLore {
 		return false;
 	}
 	
-	public List<Character> getColorCodes(String line) {
+	private List<Character> getColorCodes(String line) {
 		List<Character> colorCodes = new ArrayList<>();
 		for(int i = 0; i < line.length(); i++) {
 			char c = line.charAt(i);
@@ -75,60 +74,66 @@ public class CustomLore {
 	
 	public void replaceTagWithLines(String tag, String... newString) {
 		List<Character> colorCodes = new ArrayList<>();
-		List<String> before = new ArrayList<>(), after = new ArrayList<>(), end = new ArrayList<>();
+		List<String> end = new ArrayList<>();
 		boolean found = false;
 		for(String s : lines) {
 			if(!containsTag(s, tag)) {
 				if(!found) {
-					before.add(s);
+					end.add(s);
 				}else {
-					after.add(s);
+					end.add(s);
 				}
 			}else {
 				colorCodes = getColorCodes(s);
+				for(String newLine : newString) {
+					String editedLine = "";
+					for(Character c : colorCodes) {
+						editedLine = editedLine+'\u00a7'+c;
+					}
+					editedLine = editedLine+newLine;
+					end.add(editedLine);
+				}
 				found = true;
 			}
 		}
-		end.addAll(before);
-		for(String newLine : newString) {
-			String editedLine = "";
-			for(Character c : colorCodes) {
-				editedLine = editedLine+'\u00a7'+c;
-			}
-			editedLine = editedLine+newLine;
-			end.add(editedLine);
-		}
-		end.addAll(after);
 		lines = end;
 	}
 	
 	public void replaceTagWithLines(String tag, List<String> newString) {
 		List<Character> colorCodes = new ArrayList<>();
-		List<String> before = new ArrayList<>(), after = new ArrayList<>(), end = new ArrayList<>();
+		List<String> end = new ArrayList<>();
 		boolean found = false;
 		for(String s : lines) {
 			if(!containsTag(s, tag)) {
 				if(!found) {
-					before.add(s);
+					end.add(s);
 				}else {
-					after.add(s);
+					end.add(s);
 				}
 			}else {
 				colorCodes = getColorCodes(s);
+				for(String newLine : newString) {
+					String editedLine = "";
+					for(Character c : colorCodes) {
+						editedLine = editedLine+'\u00a7'+c;
+					}
+					editedLine = editedLine+newLine;
+					end.add(editedLine);
+				}
 				found = true;
 			}
 		}
-		end.addAll(before);
-		for(String newLine : newString) {
-			String editedLine = "";
-			for(Character c : colorCodes) {
-				editedLine = editedLine+'\u00a7'+c;
-			}
-			editedLine = editedLine+newLine;
-			end.add(editedLine);
-		}
-		end.addAll(after);
 		lines = end;
+	}
+	
+	public void replaceTagInLine(String tag, Object value) {
+		for(int i = 0; i < lines.size(); i++) {
+			if(containsTag(lines.get(i), tag)) {
+				String edit = lines.get(i);
+				edit = edit.replace("${"+tag+"}", value.toString());
+				lines.set(i, edit);
+			}
+		}
 	}
 	
 	private void addRunes() {
@@ -143,7 +148,18 @@ public class CustomLore {
 	}
 	
 	public List<String> getLore(){
-		addRunes();
+		if(item instanceof Sword) {
+			replaceTagInLine("damage", ((Sword)item).getDamage());
+			replaceTagInLine("attackSpeed", ((Sword)item).getAttackSpeed());
+		}
+		if(item instanceof Inscribable) {
+			addRunes();
+			replaceTagInLine("slots", ((Inscribable)item).getAvailableSlots());
+		}
+		if(item instanceof Durable) {
+			replaceTagInLine("maxDurability", ((Durable)item).getMaxDurability());
+			replaceTagInLine("durability", ((Durable)item).getDurability());
+		}
 		return lines;
 	}
 	
