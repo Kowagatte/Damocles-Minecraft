@@ -1,6 +1,7 @@
 §7${runes}
 
 §6Slots: ${slots}
-
 §8Damage: ${damage}
 §8AttackSpeed: ${attackSpeed}
+
+§8${durability} / ${maxDurability} Durability
