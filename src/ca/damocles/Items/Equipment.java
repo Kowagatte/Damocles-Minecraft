@@ -112,4 +112,28 @@ public class Equipment extends Item implements Inscribable, Durable, Nameable{
 		return item;
 	}
 
+	@Override
+	public void setProtected(boolean bool) {
+		NamespacedKey nameKey = new NamespacedKey(Cardinal.getInstance(), "protected");
+		if(bool) {
+			meta.getCustomTagContainer().setCustomTag(nameKey, ItemTagType.BYTE, (byte)1);
+		}else {
+			meta.getCustomTagContainer().setCustomTag(nameKey, ItemTagType.BYTE, (byte)0);
+		}
+	}
+
+	@Override
+	public boolean isProtected() {
+		NamespacedKey nameKey = new NamespacedKey(Cardinal.getInstance(), "protected");
+		if(meta.getCustomTagContainer().hasCustomTag(nameKey, ItemTagType.BYTE)) {
+			byte b = meta.getCustomTagContainer().getCustomTag(nameKey, ItemTagType.BYTE);
+			if(b == (byte)0) {
+				return false;
+			}else {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

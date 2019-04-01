@@ -12,4 +12,8 @@ public interface Inscribable {
 	
 	public void addRune(Rune rune, int level);
 	
+	public void setProtected(boolean bool);
+	
+	public boolean isProtected();
+	
 }
