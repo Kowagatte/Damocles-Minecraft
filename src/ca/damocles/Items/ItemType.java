@@ -10,7 +10,9 @@ public enum ItemType {
 	BOOTS(EquipmentSlot.FEET),
 	RING(null),
 	BOW(EquipmentSlot.HAND),
-	SWORD(EquipmentSlot.HAND);
+	SWORD(EquipmentSlot.HAND),
+	RUNE(null),
+	PROTECTION_RUNE(null);
 	
 	private EquipmentSlot slot;
 	ItemType(EquipmentSlot slot){
