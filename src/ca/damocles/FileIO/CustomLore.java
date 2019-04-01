@@ -124,6 +124,16 @@ public class CustomLore {
 		}
 	}
 	
+	private void removeTagLine(String tag) {
+		List<String> newLines = new ArrayList<>();
+		for(String s : lines) {
+			if(!containsTag(s, tag)) {
+				newLines.add(s);
+			}
+		}
+		lines = newLines;
+	}
+	
 	private void addRunes() {
 		if(item instanceof Inscribable) {
 			List<String> runeLore = new ArrayList<>();
@@ -152,6 +162,11 @@ public class CustomLore {
 		if(item instanceof Inscribable) {
 			addRunes();
 			replaceTagInLine("slots", ((Inscribable)item).getAvailableSlots());
+			if(((Inscribable)item).isProtected()) {
+				replaceTagWithLines("protected", "PROTECTED");
+			}else {
+				removeTagLine("protected");
+			}
 		}
 		if(item instanceof Durable) {
 			replaceTagInLine("maxDurability", ((Durable)item).getMaxDurability());
