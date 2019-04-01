@@ -23,8 +23,13 @@ public class SwordFactory {
 		sword = new Sword(item);
 	}
 	
-	public SwordFactory setUpDurability(int maxdurability) {
-		sword.setDurability(maxdurability);
+	public SwordFactory setMaxDurability(int maxDurability) {
+		sword.setMaxDurability(maxDurability);
+		return this;
+	}
+	
+	public SwordFactory setDurability(int durability) {
+		sword.setDurability(durability);
 		return this;
 	}
 	
