@@ -2,7 +2,7 @@
 
 &6Slots: ${slots}
 
-&9+${damage} Damage
-&c${attackSpeed} Attack Speed
+&9${armor} Armor
+&9${toughness} Toughness
 
 &8${durability} / ${maxDurability} Durability

@@ -8,10 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.ChatColor;
+
 import ca.damocles.Damocles;
 import ca.damocles.Items.Item;
 import ca.damocles.Items.Interfaces.Durable;
 import ca.damocles.Items.Interfaces.Inscribable;
+import ca.damocles.Items.Types.Armor;
 import ca.damocles.Items.Types.Sword;
 import ca.damocles.Runes.Rune;
 import ca.damocles.utils.RomanNumeral;
@@ -61,19 +64,7 @@ public class CustomLore {
 		return false;
 	}
 	
-	private List<Character> getColorCodes(String line) {
-		List<Character> colorCodes = new ArrayList<>();
-		for(int i = 0; i < line.length(); i++) {
-			char c = line.charAt(i);
-			if(c == '\u00a7') {
-				colorCodes.add(line.charAt(i+1));
-			}
-		}
-		return colorCodes;
-	}
-	
 	public void replaceTagWithLines(String tag, String... newString) {
-		List<Character> colorCodes = new ArrayList<>();
 		List<String> end = new ArrayList<>();
 		boolean found = false;
 		for(String s : lines) {
@@ -84,14 +75,10 @@ public class CustomLore {
 					end.add(s);
 				}
 			}else {
-				colorCodes = getColorCodes(s);
+				String built = s.replace("${"+tag+"}", "`");
+				String[] dissect = built.split("`");
 				for(String newLine : newString) {
-					String editedLine = "";
-					for(Character c : colorCodes) {
-						editedLine = editedLine+'\u00a7'+c;
-					}
-					editedLine = editedLine+newLine;
-					end.add(editedLine);
+					end.add(dissect[0] + newLine + dissect[1]);
 				}
 				found = true;
 			}
@@ -100,7 +87,6 @@ public class CustomLore {
 	}
 	
 	public void replaceTagWithLines(String tag, List<String> newString) {
-		List<Character> colorCodes = new ArrayList<>();
 		List<String> end = new ArrayList<>();
 		boolean found = false;
 		for(String s : lines) {
@@ -111,14 +97,16 @@ public class CustomLore {
 					end.add(s);
 				}
 			}else {
-				colorCodes = getColorCodes(s);
+				String built = s.replace("${"+tag+"}", "`");
+				String[] dissect = built.split("`");
 				for(String newLine : newString) {
-					String editedLine = "";
-					for(Character c : colorCodes) {
-						editedLine = editedLine+'\u00a7'+c;
+					if(dissect.length == 2) {
+						end.add(dissect[0] + newLine + dissect[1]);
+					}else if(dissect.length == 1){
+						end.add(dissect[0] + newLine);
+					}else {
+						end.add(newLine);
 					}
-					editedLine = editedLine+newLine;
-					end.add(editedLine);
 				}
 				found = true;
 			}
@@ -147,6 +135,15 @@ public class CustomLore {
 		}
 	}
 	
+	private void translateColorCodes() {
+		List<String> newLore = new ArrayList<>();
+		for(String s : lines) {
+			String edit = ChatColor.translateAlternateColorCodes('&', s);
+			newLore.add(edit);
+		}
+		lines = newLore;
+	}
+	
 	public List<String> getLore(){
 		if(item instanceof Sword) {
 			replaceTagInLine("damage", ((Sword)item).getDamage());
@@ -160,6 +157,11 @@ public class CustomLore {
 			replaceTagInLine("maxDurability", ((Durable)item).getMaxDurability());
 			replaceTagInLine("durability", ((Durable)item).getDurability());
 		}
+		if(item instanceof Armor) {
+			replaceTagInLine("armor", ((Armor)item).getArmor());
+			replaceTagInLine("toughness", ((Armor)item).getToughness());
+		}
+		translateColorCodes();
 		return lines;
 	}
 	
