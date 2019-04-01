@@ -1,4 +1,4 @@
 &9+ ${rune} ${level}
 &a${success}% success rate.
-$c${destroy}% destruction rate on fail.
+&c${destroy}% destruction rate on fail.
 &ePlace on item in inventory to apply.
