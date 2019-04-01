@@ -11,6 +11,7 @@ List of Tags:
     maxDurability
     armor
     toughness
+    protected
 
 Color Code symbol: &
 Color Codes: https://proxy.spigotmc.org/53239665ca63311e7f66e9144c118d71009fffaf?url=http%3A%2F%2Fi.imgur.com%2FYGtFk0v.png

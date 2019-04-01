@@ -6,3 +6,4 @@
 &c${attackSpeed} Attack Speed
 
 &8${durability} / ${maxDurability} Durability
+&l${protected}

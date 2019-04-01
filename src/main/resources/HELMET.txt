@@ -6,3 +6,4 @@
 &9${toughness} Toughness
 
 &8${durability} / ${maxDurability} Durability
+&l${protected}
