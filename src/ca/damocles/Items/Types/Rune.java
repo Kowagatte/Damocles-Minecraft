@@ -1,5 +1,6 @@
 package ca.damocles.Items.Types;
 
+import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.tags.ItemTagType;
@@ -7,6 +8,7 @@ import org.bukkit.inventory.meta.tags.ItemTagType;
 import ca.damocles.Cardinal;
 import ca.damocles.Items.Item;
 import ca.damocles.Items.ItemType;
+import ca.damocles.utils.RomanNumeral;
 
 public class Rune extends Item{
 
@@ -57,6 +59,7 @@ public class Rune extends Item{
 	
 	@Override
 	public ItemStack finish() {
+		meta.setDisplayName(ChatColor.GOLD + getRune().getName() + " "+ new RomanNumeral(getLevel()).getNumeral()+ ChatColor.GRAY+" Rune");
 		updateLore();
 		item.setItemMeta(meta);
 		return item;

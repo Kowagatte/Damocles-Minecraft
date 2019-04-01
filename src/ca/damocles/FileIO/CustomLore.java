@@ -178,7 +178,7 @@ public class CustomLore {
 		}
 		if(item instanceof ca.damocles.Items.Types.Rune) {
 			replaceTagInLine("rune", ((ca.damocles.Items.Types.Rune)item).getRune().getName());
-			replaceTagInLine("level", ((ca.damocles.Items.Types.Rune)item).getLevel());
+			replaceTagInLine("level", new RomanNumeral( ((ca.damocles.Items.Types.Rune)item).getLevel()).getNumeral());
 			replaceTagInLine("success", ((ca.damocles.Items.Types.Rune)item).getSuccess());
 			replaceTagInLine("destroy", ((ca.damocles.Items.Types.Rune)item).getDestroy());
 		}
