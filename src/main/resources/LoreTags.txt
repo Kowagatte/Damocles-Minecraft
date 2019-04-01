@@ -3,15 +3,20 @@ Example tag: ${tag}
 where tag is equal to a tag.
 
 List of Tags:
-    damage
-    attackSpeed
-    slots
-    runes
-    durability
-    maxDurability
-    armor
-    toughness
-    protected
+    damage: damage the weapon deals
+    attackSpeed: attackSpeed of weapon
+    slots: number of slots the item has left to enchant
+    runes: all enchantment names and levels
+    durability: durability of equipment
+    maxDurability: max durability of equipment
+    armor: armor the Armor gives
+    toughness: toughness the Armor gives
+    protected: if the gear is protected.
+    rune: rune Type the rune is giving
+    level: level the rune is
+    success: percent chance the rune will apply
+    destroy: percent chance the item will disappear if failed
+
 
 Color Code symbol: &
 Color Codes: https://proxy.spigotmc.org/53239665ca63311e7f66e9144c118d71009fffaf?url=http%3A%2F%2Fi.imgur.com%2FYGtFk0v.png

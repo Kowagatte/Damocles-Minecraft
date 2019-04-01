@@ -4,6 +4,7 @@ import ca.damocles.Items.ItemType;
 
 public enum Rune {
 	
+	BLANK(0, "ERROR", new ItemType[] {}),
 	LIFESTEAL(3, "LifeSteal", new ItemType[] {ItemType.SWORD}),
 	SPEED(3, "Speed", new ItemType[] {ItemType.BOOTS}),
 	VOLLEY(4, "Volley", new ItemType[] {ItemType.BOW}),
