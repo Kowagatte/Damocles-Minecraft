@@ -31,7 +31,7 @@ public class RuneCommand implements CommandExecutor{
 					player.getInventory().addItem(new RuneFactory(Rune.valueOf(args[0].toUpperCase()))
 							.setLevel(Integer.valueOf(args[1]))
 							.setSuccess(Integer.valueOf(args[2]))
-							.setDestroy(Integer.valueOf(args[2]))
+							.setDestroy(Integer.valueOf(args[3]))
 							.build());
 					return true;
 				}catch(NumberFormatException e) {
