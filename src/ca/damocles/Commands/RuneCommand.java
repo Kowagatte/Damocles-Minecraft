@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import ca.damocles.Damocles;
 import ca.damocles.Items.Factories.ProtectionRuneFactory;
 import ca.damocles.Items.Factories.RuneFactory;
+import ca.damocles.Items.Factories.SlotRuneFactory;
 import ca.damocles.Runes.Rune;
 
 public class RuneCommand implements CommandExecutor{
@@ -56,6 +57,21 @@ public class RuneCommand implements CommandExecutor{
 					Damocles.sendCenteredMessage(player, ChatColor.YELLOW + s);
 					Damocles.sendCenteredMessage(player, ChatColor.GREEN+"----------------------------------------------------");
 					return true;
+				}else {
+					Damocles.sendCenteredMessage(player, ChatColor.BOLD+"No such subcommand, use /rune for help.");
+					return true;
+				}
+			}else if(args.length == 2){
+				if(args[0].equalsIgnoreCase("slot")) {
+					try {
+						player.getInventory().addItem(new SlotRuneFactory()
+								.setSlots(Integer.valueOf(args[1]))
+								.build());
+						return true;
+					}catch(NumberFormatException e) {
+						Damocles.sendCenteredMessage(player, ChatColor.BOLD+"Invalid Arguments, use /rune for help.");
+						return true;
+					}
 				}else {
 					Damocles.sendCenteredMessage(player, ChatColor.BOLD+"No such subcommand, use /rune for help.");
 					return true;

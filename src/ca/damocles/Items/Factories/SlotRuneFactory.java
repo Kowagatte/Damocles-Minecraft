@@ -15,7 +15,7 @@ public class SlotRuneFactory {
 	public SlotRuneFactory() {
 		ItemStack item = new ItemStack(Material.SHEARS, 1);
 		ItemMeta meta = item.getItemMeta();
-		((Damageable)meta).setDamage(4);
+		((Damageable)meta).setDamage(5);
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ENCHANTS);
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);
