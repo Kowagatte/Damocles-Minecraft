@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,8 +40,10 @@ public class ApplyRune implements Listener{
 							if(success <= rune.getSuccess()) {
 								inscribable.addRune(rune.getRune(), rune.getLevel());
 								((Item)inscribable).finish();
+								event.getWhoClicked().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, event.getWhoClicked().getLocation(), 20);
 							}else {
 								if(destroy <= rune.getDestroy()) {
+									event.getWhoClicked().getWorld().spawnParticle(Particle.FLAME, event.getWhoClicked().getLocation(), 20);
 									if(inscribable.isProtected()) {
 										inscribable.setProtected(false);
 										((Item)inscribable).finish();

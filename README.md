@@ -8,22 +8,26 @@ on the github so I know (It makes my heart fuzzy). I will try to keep daily comm
 going and hopefully push out a Beta release soon! - Nicholas N Ryan (Kowagatte).
 
 ## At this very moment
- - [ ] Custom item lore (Customizable in text files) - Couple Days, maybe sooner.
+- [ ] Custom Item Models - Days/Weeks
+- [ ] Additional Runes - Day
 
 ## Currently Working On
-- [ ] Custom Item Blueprints - Day
-- [ ] Custom Item Models - Hours
+- [ ] Spells/Spell-Packs/Spell-Books - Half a day
+- [ ] Character Specific Nametags - Hours
 
 ## Todo
 - [x] Auto Dependency Install / Plugin Shading - Day
 - [x] Character Creation - 2 Days
 - [x] Character level Algorithm (Based on Pokemon) - Hours
+- [x] Custom item lore (Customizable in text files) - Couple Days, maybe sooner.
+- [x] Custom Item Blueprints - Day
+- [x] Initial Rune Framework - Day
+- [ ] Loot Chests - Day
+- [ ] Rune Harvesting - Day
 - [ ] Mining - Half a Day
 - [ ] Blacksmithing - Day
 - [ ] Souls - Hours
 - [ ] Anvils - Hours
-- [ ] Runes/Enchantments - Day
-- [ ] Spells/Spell-Packs/Spell-Books - Half a day
 - [ ] Clans - Day
 - [ ] Custom Mobs - 2 Days
 - [ ] Guilds/Parties - Half a day
