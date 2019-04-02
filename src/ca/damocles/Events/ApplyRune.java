@@ -15,6 +15,7 @@ import ca.damocles.Items.ItemWrapper;
 import ca.damocles.Items.Interfaces.Inscribable;
 import ca.damocles.Items.Types.ProtectionRune;
 import ca.damocles.Items.Types.Rune;
+import ca.damocles.Items.Types.SlotRune;
 
 public class ApplyRune implements Listener{
 	
@@ -67,6 +68,13 @@ public class ApplyRune implements Listener{
 					return;
 				}
 				
+			}else if((new ItemWrapper(itemInCursor).get() instanceof SlotRune) && new ItemWrapper(itemClickedOn).get() instanceof Inscribable) {
+				Inscribable inscribable = (Inscribable)new ItemWrapper(itemClickedOn).get();
+				SlotRune rune = (SlotRune)new ItemWrapper(itemInCursor).get();
+				inscribable.setSlots(inscribable.getAvailableSlots()+rune.getSlots());
+				((Item)inscribable).finish();
+				event.setCancelled(true);
+				return;
 			}
 		}
 	}

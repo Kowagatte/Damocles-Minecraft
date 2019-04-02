@@ -15,6 +15,7 @@ import ca.damocles.Items.Item;
 import ca.damocles.Items.Interfaces.Durable;
 import ca.damocles.Items.Interfaces.Inscribable;
 import ca.damocles.Items.Types.Armor;
+import ca.damocles.Items.Types.SlotRune;
 import ca.damocles.Items.Types.Sword;
 import ca.damocles.Runes.Rune;
 import ca.damocles.utils.RomanNumeral;
@@ -187,6 +188,9 @@ public class CustomLore {
 			replaceTagInLine("level", new RomanNumeral( ((ca.damocles.Items.Types.Rune)item).getLevel()).getNumeral());
 			replaceTagInLine("success", ((ca.damocles.Items.Types.Rune)item).getSuccess());
 			replaceTagInLine("destroy", ((ca.damocles.Items.Types.Rune)item).getDestroy());
+		}
+		if(item instanceof SlotRune) {
+			replaceTagInLine("slots", ((SlotRune)item).getSlots());
 		}
 		translateColorCodes();
 		return lines;

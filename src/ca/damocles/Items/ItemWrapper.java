@@ -8,6 +8,7 @@ import ca.damocles.Cardinal;
 import ca.damocles.Items.Types.Armor;
 import ca.damocles.Items.Types.ProtectionRune;
 import ca.damocles.Items.Types.Rune;
+import ca.damocles.Items.Types.SlotRune;
 import ca.damocles.Items.Types.Sword;
 
 public class ItemWrapper {
@@ -53,6 +54,8 @@ public class ItemWrapper {
 				return new Rune(item);
 			case SWORD:
 				return new Sword(item);
+			case SLOT_RUNE:
+				return new SlotRune(item);
 			default:
 				break;
 		}

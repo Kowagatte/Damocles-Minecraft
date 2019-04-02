@@ -1,0 +1,3 @@
+&9+ ${slots} Slots
+&eAdds Rune Slots to an item.
+&eClick on an equip to apply.

@@ -12,7 +12,8 @@ public enum ItemType {
 	BOW(EquipmentSlot.HAND, true),
 	SWORD(EquipmentSlot.HAND, true),
 	RUNE(null, false),
-	PROTECTION_RUNE(null, false);
+	PROTECTION_RUNE(null, false),
+	SLOT_RUNE(null, false);
 	
 	private EquipmentSlot slot;
 	private boolean inscribable;
