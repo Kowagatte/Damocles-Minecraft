@@ -3,3 +3,8 @@ version: 1.10.0
 author: Kowagatte
 main: ca.damocles.Cardinal
 api-version: 1.13
+commands:
+  rune:
+    description: Spawns in a Rune.
+    aliases: [runes]
+    permission: damocles.command.rune

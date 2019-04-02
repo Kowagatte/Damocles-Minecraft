@@ -13,6 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.quickprogrammingtips.ASCIIArtGenerator;
 import com.quickprogrammingtips.ASCIIArtGenerator.ASCIIArtFont;
 
+import ca.damocles.Commands.RuneCommand;
 import ca.damocles.Events.ApplyRune;
 import ca.damocles.Events.DamageListener;
 import ca.damocles.Events.LoginMenuEvent;
@@ -32,6 +33,7 @@ public class Cardinal extends JavaPlugin{
 		pluginInstance = this;
 		registerConfig();
 		registerEvents();
+		registerCommands();
 		if(isFirstTime())
 			firstTimeSetUp();
 		enableMessage();
@@ -40,6 +42,10 @@ public class Cardinal extends JavaPlugin{
 	
 	public void onDisable() {
 		pluginInstance = null;
+	}
+	
+	public void registerCommands() {
+		this.getCommand("rune").setExecutor(new RuneCommand());
 	}
 	
 	public void registerEvents() {
