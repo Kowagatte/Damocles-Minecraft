@@ -1,2 +1,3 @@
-&ePlace on item to protect it from being destroyed
-&ewhen Inscribing. (Applying a Rune)
+&ePlace on item to protect it from
+&ebeing destroyed when Inscribing.
+&e(Applying a Rune)

@@ -78,7 +78,13 @@ public class CustomLore {
 				String built = s.replace("${"+tag+"}", "`");
 				String[] dissect = built.split("`");
 				for(String newLine : newString) {
-					end.add(dissect[0] + newLine + dissect[1]);
+					if(dissect.length == 2) {
+						end.add(dissect[0] + newLine + dissect[1]);
+					}else if(dissect.length == 1){
+						end.add(dissect[0] + newLine);
+					}else {
+						end.add(newLine);
+					}
 				}
 				found = true;
 			}

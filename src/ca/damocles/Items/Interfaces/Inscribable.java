@@ -10,6 +10,8 @@ public interface Inscribable {
 	
 	public int getAvailableSlots();
 	
+	public void setSlots(int slots);
+	
 	public void addRune(Rune rune, int level);
 	
 	public void setProtected(boolean bool);

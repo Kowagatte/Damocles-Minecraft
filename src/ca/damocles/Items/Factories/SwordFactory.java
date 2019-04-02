@@ -28,6 +28,11 @@ public class SwordFactory {
 		return this;
 	}
 	
+	public SwordFactory setSlots(int slot) {
+		sword.setSlots(slot);
+		return this;
+	}
+	
 	public SwordFactory setDurability(int durability) {
 		sword.setDurability(durability);
 		return this;

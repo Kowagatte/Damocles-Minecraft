@@ -55,6 +55,13 @@ public class Equipment extends Item implements Inscribable, Durable, Nameable{
 		NamespacedKey runesKey = new NamespacedKey(Cardinal.getInstance(), "rune_slots");
 		return (meta.getCustomTagContainer().hasCustomTag(runesKey, ItemTagType.INTEGER)) ? meta.getCustomTagContainer().getCustomTag(runesKey, ItemTagType.INTEGER) : 0;
 	}
+	
+	@Override
+	public void setSlots(int slots) {
+		NamespacedKey nameKey = new NamespacedKey(Cardinal.getInstance(), "rune_slots");
+		meta.getCustomTagContainer().setCustomTag(nameKey, ItemTagType.INTEGER, slots);
+		return;
+	}
 
 	@Override
 	public int getMaxDurability() {

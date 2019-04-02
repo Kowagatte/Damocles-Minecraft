@@ -7,6 +7,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import ca.damocles.Items.TextureID;
+import ca.damocles.Items.Factories.ProtectionRuneFactory;
+import ca.damocles.Items.Factories.RuneFactory;
 import ca.damocles.Items.Factories.SwordFactory;
 import ca.damocles.Runes.Rune;
 
@@ -20,14 +22,24 @@ public class PlayerShiftClick implements Listener{
 					
 					
 					event.getPlayer().getInventory().addItem(
-							new SwordFactory(TextureID.BRONZE_SWORD.getID())
-							.setUpDurability(100)
+							new SwordFactory(TextureID.EXCALIBUR.getID())
+							.setMaxDurability(100)
+							.setDurability(100)
 							.setDamage(7)
 							.setAttackSpeed(-2.4)
-							.addRune(Rune.SHARPENED, 4)
+							.setSlots(3)
 							.build());
-				
-				
+					
+					event.getPlayer().getInventory().addItem(
+							new RuneFactory(Rune.SHARPENED)
+							.setLevel(4)
+							.setSuccess(83)
+							.setDestroy(26)
+							.build());
+					
+					event.getPlayer().getInventory().addItem(
+							new ProtectionRuneFactory()
+							.build());
 				
 				}
 			}
