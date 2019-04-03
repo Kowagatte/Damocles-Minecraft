@@ -12,7 +12,7 @@ public enum Rune {
 	BLOODTHIRST(3, "BloodThirst", new ItemType[] {ItemType.SWORD}),
 	PROTECTION(4, "Protection", new ItemType[] {ItemType.BOOTS, ItemType.LEGS, ItemType.CHESTPLATE, ItemType.HELMET}),
 	SHARPENED(5, "Sharpened", new ItemType[] {ItemType.SWORD}),
-	FLAME_ASPECT(2, "Flame Aspect", new ItemType[] {ItemType.BOW, ItemType.SWORD});
+	FLAME_ASPECT(1, "Flame Aspect", new ItemType[] {ItemType.BOW, ItemType.SWORD});
 	
 	private int maxLevel;
 	private String name;
